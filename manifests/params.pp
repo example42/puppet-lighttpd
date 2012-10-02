@@ -67,12 +67,12 @@ class lighttpd::params {
   }
 
   $pid_file = $::operatingsystem ? {
-    default => '/var/run/lighttpd.pid',
+    default => '/var/run/lighttpd/lighttpd.pid',
   }
 
   $data_dir = $::operatingsystem ? {
-    /(?i:Debian|Ubuntu|Mint)/ => '/var/run/lighttpd',
-    default => '/var/www',
+    /(?i:Debian|Ubuntu|Mint)/ => '/var/www/lighttpd',
+    default                   => '/var/www',
   }
 
   $log_dir = $::operatingsystem ? {
@@ -80,7 +80,7 @@ class lighttpd::params {
   }
 
   $log_file = $::operatingsystem ? {
-    default => '/var/log/lighttpd.log',
+    default => '/var/log/lighttpd/lighttpd.log',
   }
 
 
