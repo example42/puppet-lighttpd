@@ -2,7 +2,7 @@
 
 This is a Puppet module for lighttpd based on the second generation layout ("NextGen") of Example42 Puppet Modules.
 
-Made by Alessandro Franceschi / Lab42
+Made by Alvagante / Example42
 
 Official site: http://www.example42.com
 
