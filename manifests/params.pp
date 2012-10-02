@@ -41,7 +41,8 @@ class lighttpd::params {
   }
 
   $config_dir = $::operatingsystem ? {
-    default => '/etc/lighttpd',
+    /(?i:Debian|Ubuntu|Mint)/ => '/etc/lighttpd/conf-enabled',
+    default => '/etc/lighttpd/conf.d',
   }
 
   $config_file = $::operatingsystem ? {
@@ -70,7 +71,8 @@ class lighttpd::params {
   }
 
   $data_dir = $::operatingsystem ? {
-    default => '/etc/lighttpd',
+    /(?i:Debian|Ubuntu|Mint)/ => '/var/run/lighttpd',
+    default => '/var/www',
   }
 
   $log_dir = $::operatingsystem ? {
@@ -78,10 +80,10 @@ class lighttpd::params {
   }
 
   $log_file = $::operatingsystem ? {
-    default => '/var/log/lighttpd/lighttpd.log',
+    default => '/var/log/lighttpd.log',
   }
 
-  $port = '42'
+  $port = '80'
   $protocol = 'tcp'
 
   # General Settings
