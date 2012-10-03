@@ -5,6 +5,13 @@
 #
 # == Parameters
 #
+# Module specific parameters
+# [*use_ssl*]
+#   Set to true to activate ssl.
+#   In order to use this option you need to use a template that honours it:
+#   template => 'site/lighttpd/lighttpd.conf.erb',
+#   (cp lighttpd/templates/lighttpd.conf.erb site/templates/lighttpd/lighttpd.conf.erb)
+#
 # Standard class parameters
 # Define the general class behaviour and customizations
 #
@@ -205,6 +212,7 @@
 #   Alessandro Franceschi <al@lab42.it/>
 #
 class lighttpd (
+  $use_ssl             = params_lookup( 'use_ssl' ),
   $my_class            = params_lookup( 'my_class' ),
   $source              = params_lookup( 'source' ),
   $source_dir          = params_lookup( 'source_dir' ),
@@ -247,6 +255,7 @@ class lighttpd (
   $protocol            = params_lookup( 'protocol' )
   ) inherits lighttpd::params {
 
+  $bool_use_ssl=any2bool($use_ssl)
   $bool_source_dir_purge=any2bool($source_dir_purge)
   $bool_service_autorestart=any2bool($service_autorestart)
   $bool_absent=any2bool($absent)
@@ -377,7 +386,6 @@ class lighttpd (
   if $lighttpd::my_class {
     include $lighttpd::my_class
   }
-
 
   ### Provide puppi data, if enabled ( puppi => true )
   if $lighttpd::bool_puppi == true {

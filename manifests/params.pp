@@ -14,6 +14,9 @@
 #
 class lighttpd::params {
 
+  ### Module specific parameters
+  $ssl = false
+
   ### Application related parameters
 
   $package = $::operatingsystem ? {
