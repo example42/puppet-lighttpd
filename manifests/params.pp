@@ -15,7 +15,7 @@
 class lighttpd::params {
 
   ### Module specific parameters
-  $ssl = false
+  $use_ssl = false
 
   ### Application related parameters
 
