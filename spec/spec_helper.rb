@@ -18,7 +18,8 @@ RSpec.configure do |c|
   c.filter_run_excluding :broken => true
 
   c.after :each do
-    FileUtils.remove_entry_secure(@puppetdir)
+    FileUtils.rm_rf(Dir.glob('/tmp/lighttpd20*') , :secure => true)
+#    FileUtils.remove_entry_secure(@puppetdir)
   end
 
   c.module_path = File.join(File.dirname(__FILE__), '../../')

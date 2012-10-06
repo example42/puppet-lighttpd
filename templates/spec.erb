@@ -4,5 +4,6 @@
 <%= scope.to_hash.reject { |k,v| !( k.is_a?(String) && v.is_a?(String) ) }.to_yaml %>
 
 # Custom Options
-<%= options['opt_a'] %>
-<%= options['opt_b'] %>
+opt_a = <%= scope.function_options_lookup(['opt_a','default_a']) %>
+opt_b = <%= scope.function_options_lookup(['opt_b','default_b']) %>
+opt_c = <%= scope.function_options_lookup(['opt_c','default_c']) %>
