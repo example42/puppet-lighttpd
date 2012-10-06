@@ -1,12 +1,14 @@
 # File Managed by Puppet
 #
-# Sample /etc/lighttpd/lighttpd.conf ased on Centos6
-var.log_root    = "<%= log_dir %>"
-var.server_root = "<%= data_dir %>"
+# Sample /etc/lighttpd/lighttpd.conf based on Centos6 layout
+#
+var.log_root    = "<%= scope.lookupvar('lighttpd::log_dir') %>"
+var.server_root = "<%= scope.lookupvar('lighttpd::data_dir') %>"
 var.state_dir   = "/var/run"
 var.home_dir    = "/var/lib/lighttpd"
-var.conf_dir    = "<%= conf_dir %>"
+var.conf_dir    = "<%= scope.lookupvar('lighttpd::conf_dir') %>"
 
+# Settings for chrooted environment
 #var.log_root    = "/logs"
 #var.server_root = "/"
 #var.state_dir   = "/run"
@@ -23,18 +25,16 @@ var.socket_dir  = home_dir + "/sockets"
 
 include "modules.conf"
 
-server.port = <%= port %>
-server.use-ipv6 = "enable"
-# server.bind = "<%= ipaddress %>"
+server.port = <%= scope.lookupvar('lighttpd::port') %>
+server.use-ipv6 = "<%= scope.function_options_lookup(['server.use-ipv6','enable']) %>"
+# server.bind = "<%= scope.lookupvar('lighttpd::ipaddress') %>"
 
-server.username  = "<%= process_user %>"
-server.groupname = "<%= process_user %>"
+server.username  = "<%= scope.lookupvar('lighttpd::process_user') %>"
+server.groupname = "<%= scope.lookupvar('lighttpd::process_user')  %>"
 
-#server.core-files = "disable"
 server.document-root = server_root + "/lighttpd"
 
-#server.tag = "lighttpd"
-server.pid-file = "<%= pid_file %>"
+server.pid-file = "<%= scope.lookupvar('lighttpd::pid_file') %>"
 
 server.errorlog             = log_root + "/error.log"
 #server.errorlog-use-syslog = "enable"
@@ -42,18 +42,19 @@ server.errorlog             = log_root + "/error.log"
 include "conf.d/access_log.conf"
 include "conf.d/debug.conf"
 
-server.event-handler = "linux-sysepoll"
-server.network-backend = "linux-sendfile"
-#server.max-fds = 2048
-server.stat-cache-engine = "simple"
-server.max-connections = 1024
-#server.max-keep-alive-idle = 5
-#server.max-keep-alive-requests = 16
-#server.max-request-size = 0
-#server.max-read-idle = 60
-#server.max-write-idle = 360
-#server.kbytes-per-second = 128
-#connection.kbytes-per-second = 32
+server.event-handler = "<%= scope.function_options_lookup(['server.event-handler','linux-sysepoll']) %>"
+server.network-backend = "<%= scope.function_options_lookup(['server.network-backend','linux-sendfile']) %>"
+server.max-fds = <%= scope.function_options_lookup(['server.max-fds','2048']) %>
+server.stat-cache-engine = "<%= scope.function_options_lookup(['server.stat-cache-engine','simple']) %>"
+
+server.max-connections = <%= scope.function_options_lookup(['server.max-connections','1024']) %>
+server.server.max-keep-alive-idle = <%= scope.function_options_lookup(['server.max-keep-alive-idle','5']) %>
+server.server.max-keep-alive-requests = <%= scope.function_options_lookup(['server.max-keep-alive-requests','16']) %>
+server.max-request-size = <%= scope.function_options_lookup(['server.max-request-size','0']) %>
+server.max-read-idle = <%= scope.function_options_lookup(['server.max-read-idle','60']) %>
+server.max-write-idle = <%= scope.function_options_lookup(['server.max-write-idle','360']) %>
+server.kbytes-per-second = <%= scope.function_options_lookup(['server.kbytes-per-second','128']) %>
+server.connection.kbytes-per-second = <%= scope.function_options_lookup(['connection.kbytes-per-second','32']) %>
 
 index-file.names += (
   "index.xhtml", "index.html", "index.htm", "default.htm", "index.php"
