@@ -126,11 +126,8 @@ describe 'lighttpd' do
     end
   end
 
-  describe 'Test service autorestart', :broken => true do
-    it 'should automatically restart the service, by default' do
-      content = catalogue.resource('file', 'lighttpd.conf').send(:parameters)[:notify]
-      content.should == 'Service[lighttpd]{:name=>"lighttpd"}'
-    end
+  describe 'Test service autorestart' do
+    it { should contain_file('lighttpd.conf').with_notify('Service[lighttpd]') }
   end
 
   describe 'Test service autorestart' do
