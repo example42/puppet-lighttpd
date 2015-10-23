@@ -39,7 +39,7 @@ define lighttpd::dotconf (
     default   => template($template),
   }
 
-  include lighttpd 
+  include lighttpd
 
   file { "Lighttpd_${name}.conf":
     ensure  => $ensure,

@@ -344,12 +344,12 @@ class lighttpd (
   }
 
   service { 'lighttpd':
-    ensure     => $lighttpd::manage_service_ensure,
-    name       => $lighttpd::service,
-    enable     => $lighttpd::manage_service_enable,
-    hasstatus  => $lighttpd::service_status,
-    pattern    => $lighttpd::process,
-    require    => Package['lighttpd'],
+    ensure    => $lighttpd::manage_service_ensure,
+    name      => $lighttpd::service,
+    enable    => $lighttpd::manage_service_enable,
+    hasstatus => $lighttpd::service_status,
+    pattern   => $lighttpd::process,
+    require   => Package['lighttpd'],
   }
 
   file { 'lighttpd.conf':
