@@ -367,7 +367,7 @@ class lighttpd (
   }
 
   # The whole lighttpd configuration directory can be recursively overriden
-  if $lighttpd::source_dir {
+  if $lighttpd::source_dir and $lighttpd::source_dir != '' {
     file { 'lighttpd.dir':
       ensure  => directory,
       path    => $lighttpd::config_dir,
